@@ -3,7 +3,7 @@ import { shade } from 'polished';
 
 export const Container = styled.div``;
 
-export const Headar = styled.header`
+export const Header = styled.header`
   padding: 32px 0;
   background: #28262e;
 `;
