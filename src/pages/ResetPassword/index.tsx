@@ -18,7 +18,7 @@ import api from '../../services/api';
 
 interface ResetPasswordFormData {
   password: string;
-  password_confimation: string;
+  password_confirmation: string;
 }
 
 const ResetPasswordFormData: React.FC = () => {
@@ -33,7 +33,7 @@ const ResetPasswordFormData: React.FC = () => {
 
         const schema = Yup.object().shape({
           password: Yup.string().required('Senha obrigatório'),
-          password_confimation: Yup.string().oneOf(
+          password_confirmation: Yup.string().oneOf(
             [Yup.ref('password')],
             'As senhas devem corresponder',
           ),
@@ -43,7 +43,7 @@ const ResetPasswordFormData: React.FC = () => {
           abortEarly: false,
         });
 
-        const { password, password_confimation } = data;
+        const { password, password_confirmation } = data;
         const token = location.search.replace('?token=', '');
 
         if (!token) {
@@ -52,7 +52,7 @@ const ResetPasswordFormData: React.FC = () => {
 
         await api.post('password/reset', {
           password,
-          password_confimation,
+          password_confirmation,
           token,
         });
 
@@ -89,7 +89,7 @@ const ResetPasswordFormData: React.FC = () => {
             />
             <Input
               icon={FiLock}
-              name="password_confimation"
+              name="password_confirmation"
               type="password"
               placeholder="Confirmar Nova Senha"
             />

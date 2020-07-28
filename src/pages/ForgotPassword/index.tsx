@@ -50,7 +50,7 @@ const ForgotPassword: React.FC = () => {
           type: 'success',
           title: 'E-mail de recuperação enviado',
           description:
-            'Enviamos um email para confirmar a recupercação de senha, cheque sua caixa de entrada',
+            'Enviamos um email para confirmar a recuperação de senha, cheque sua caixa de entrada',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -76,7 +76,7 @@ const ForgotPassword: React.FC = () => {
         <AnimationContainer>
           <img src={logo} alt="GoBarber" />
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Recuperção de senha</h1>
+            <h1>Recuperação de senha</h1>
             <Input icon={FiMail} name="email" placeholder="E-mail" />
             <Button loading={loading} type="submit">
               Recuperar

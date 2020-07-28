@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
         });
         addToast({
           type: 'success',
-          title: 'Cadastrodo com sucesso',
+          title: 'Cadastrado com sucesso',
           description: 'Agora você já pode fazer o logon',
         });
         history.push('/');
@@ -86,7 +86,7 @@ const SignUp: React.FC = () => {
               type="password"
               placeholder="Senha"
             />
-            <Button type="submit">Cadastar</Button>
+            <Button type="submit">Criar Conta</Button>
           </Form>
           <Link to="/">
             <FiArrowLeft /> Voltar para logon

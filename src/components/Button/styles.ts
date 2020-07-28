@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const ButtonElemtent = styled.button`
+export const ButtonElement = styled.button`
   background: #ff9000;
   border-radius: 10px;
   border: 0;

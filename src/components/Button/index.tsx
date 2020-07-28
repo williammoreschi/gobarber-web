@@ -1,14 +1,14 @@
 import React, { ButtonHTMLAttributes } from 'react';
-import { ButtonElemtent } from './styles';
+import { ButtonElement } from './styles';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => (
-  <ButtonElemtent type="button" {...rest}>
+  <ButtonElement type="button" {...rest}>
     {loading ? 'Aguarde...' : children}
-  </ButtonElemtent>
+  </ButtonElement>
 );
 
 export default Button;
