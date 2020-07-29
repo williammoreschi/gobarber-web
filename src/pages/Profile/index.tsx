@@ -3,7 +3,7 @@ import { FiArrowLeft, FiMail, FiLock, FiUser, FiCamera } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import default_avatar from '../../assets/default_avatar.png';
 import api from '../../services/api';
@@ -28,6 +28,7 @@ const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const { user, updateUser } = useAuth();
+  const history = useHistory();
 
   const handleSubmit = useCallback(
     async (data: ProfileFormData) => {
@@ -39,24 +40,46 @@ const Profile: React.FC = () => {
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo 6 caracteres'),
+          old_password: Yup.string(),
+          password: Yup.string().when(
+            'old_password',
+            (oldPassword: string, field: any) =>
+              oldPassword
+                ? field.required().min(6, 'No mínimo 6 caracteres')
+                : field,
+          ),
+          password_confirmation: Yup.string()
+            .when('old_password', {
+              is: (val) => !!val.length,
+              then: Yup.string().required('Campo Obrigatório'),
+              otherwise: Yup.string(),
+            })
+            .oneOf([Yup.ref('password')], 'As senhas devem corresponder'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post('users', {
+        const formData = {
           name: data.name,
           email: data.email,
-          password: data.password,
-          old_password: data.old_password,
-          password_confirmation: data.password_confirmation,
-        });
+          ...(data.old_password
+            ? {
+                password: data.password,
+                old_password: data.old_password,
+                password_confirmation: data.password_confirmation,
+              }
+            : {}),
+        };
+
+        const response = await api.put('profile', formData);
+        updateUser(response.data);
+        history.push('/dashboard');
         addToast({
           type: 'success',
-          title: 'Alterado com sucesso',
-          description: 'Dados Atualizado',
+          title: 'Perfil atualizado!',
+          description: 'Suas informações foram atualizadas com sucesso',
         });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -65,14 +88,13 @@ const Profile: React.FC = () => {
         } else {
           addToast({
             type: 'error',
-            title: 'Erro no Alterar',
-            description:
-              'Ocorreu um erro ao alterar seu perfil, tente novamente',
+            title: 'Erro na atualização',
+            description: 'Ocorreu um erro ao atualizar perfil, tente novamente',
           });
         }
       }
     },
-    [addToast],
+    [addToast, updateUser, history],
   );
 
   const handleAvatarChange = useCallback(
