@@ -99,15 +99,23 @@ const Profile: React.FC = () => {
   const handleAvatarChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
-        const data = new FormData();
-        data.append('avatar', e.target.files[0]);
-        api.patch('/users/avatar', data).then((response) => {
-          updateUser(response.data);
-          addToast({
-            type: 'success',
-            title: 'Avatar Atualizado!',
+        try {
+          const data = new FormData();
+          data.append('avatar', e.target.files[0]);
+          api.patch('/users/avatar', data).then((response) => {
+            updateUser(response.data);
+            addToast({
+              type: 'success',
+              title: 'Avatar Atualizado!',
+            });
           });
-        });
+        } catch (error) {
+          addToast({
+            type: 'error',
+            title: 'Erro na atualização',
+            description: 'A imagem não pode ser atualizado',
+          });
+        }
       }
     },
     [addToast, updateUser],
