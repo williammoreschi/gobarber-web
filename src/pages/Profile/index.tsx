@@ -5,7 +5,6 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 
-import default_avatar from '../../assets/default_avatar.png';
 import api from '../../services/api';
 import { useToast } from '../../hooks/ToastContext';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -132,7 +131,7 @@ const Profile: React.FC = () => {
           }}
         >
           <AvatarInput>
-            <img src={user.avatar_url || default_avatar} alt={user.name} />
+            <img src={user.avatar_url} alt={user.name} />
             <label htmlFor="avatar">
               <FiCamera />
               <input type="file" id="avatar" onChange={handleAvatarChange} />

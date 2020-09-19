@@ -7,7 +7,6 @@ import ptBR from 'date-fns/locale/pt-BR';
 import 'react-day-picker/lib/style.css';
 import { parseISO } from 'date-fns/esm';
 import logo from '../../assets/logo.svg';
-import default_avatar from '../../assets/default_avatar.png';
 import {
   Container,
   Header,
@@ -86,7 +85,7 @@ const Dashboard: React.FC = () => {
           return {
             ...appointment,
             hourFormatted: format(parseISO(appointment.date), 'HH:mm'),
-            defaultAvatar: appointment.user.avatar_url || default_avatar,
+            defaultAvatar: appointment.user.avatar_url,
           };
         });
         setAppointments(appointmentsFormatted);
