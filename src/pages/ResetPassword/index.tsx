@@ -71,7 +71,7 @@ const ResetPasswordFormData: React.FC = () => {
         }
       }
     },
-    [addToast, history],
+    [addToast, history, location],
   );
 
   return (
