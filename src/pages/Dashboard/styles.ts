@@ -224,10 +224,14 @@ export const Calendar = styled.aside`
     width: 100%;
   }
 
+  .DayPicker-Caption {
+    margin-left: 15px;
+  }
+
   .DayPicker-Month {
     border-collapse: separate;
     border-spacing: 8px;
-    margin: 16px;
+    margin: 16px 0;
   }
 
   .DayPicker-Day {
